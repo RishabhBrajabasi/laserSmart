@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>SmartLaser</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        var slide_idx = 0
+        function updateSlide(idx) {
+            document.getElementById("slide").src="/view/" + idx + "?" + new Date().getTime(); // cache-breaker
+        }
+        socket.on('connect', function() {
+            updateSlide(slide_idx)
+        })
+        socket.on('next', function(msg) {
+            slide_idx++
+            updateSlide(slide_idx)
+        })
+        socket.on('previous', function(msg) {
+            slide_idx--
+            slide_idx = Math.max(0, slide_idx)
+            updateSlide(slide_idx)
+        })
+        socket.on('refresh', function(msg) {
+            updateSlide(slide_idx)
+        })
+      </script>
+    <img style="max-width: 100%; max-height: 100vh; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" src="" id="slide" />
+</body>
+</html>
