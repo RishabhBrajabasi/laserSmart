@@ -20,9 +20,6 @@
 
 4. **aruco_tracker.py** : Extracts pose of multiple aruco markers from a webcam stream.
 
+# laserSmart
+A digital laser to annotate pdfs. 
 
-
- 
- 
- 
- 
